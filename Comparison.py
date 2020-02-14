@@ -18,8 +18,8 @@ def remove_duplicates(file_name, path):
     frame_previous = cv2.imread('blank.jpg')
     height, width, layers = frame_previous.shape
     size = (width, height)
-
-    video = cv2.VideoWriter(path+'/project.avi', cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    video = cv2.VideoWriter(path+'/project.avi', cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
 
     while (cap.isOpened()):
         ret, frame = cap.read()

@@ -1,18 +1,13 @@
 import os
 import Comparison
+import Cropping
 import cv2
 from flask import Flask, request, render_template, url_for, redirect, Response
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+
 
 
 class VideoCamera(object):
     def __init__(self, filename):
-        # Using OpenCV to capture from device 0. If you have trouble capturing
-        # from a webcam, comment the line below out and use a video file
-        # instead.
-        # self.video = cv2.VideoCapture(0)
-        # If you decide to use video.mp4, you must have this file in the folder
-        # as the main.py.
         self.video = cv2.VideoCapture(filename)
 
     def __del__(self):
@@ -39,8 +34,8 @@ def index():
 
 @app.route('/cropped/start_from/<int:start_from>/end_at/<int:end_at>')
 def index_cropped(start_from, end_at):
-    ffmpeg_extract_subclip(current_dir+'/videos/my_upload_video.mp4', start_from, end_at,
-                           targetname=current_dir+"/videos/cropped.mp4")
+    Cropping.Crop_Video(current_dir+'/videos/my_upload_video.mp4', start_from, end_at,
+                           current_dir+"/videos/cropped.mp4")
     return render_template('cropped_index.html')
 
 
